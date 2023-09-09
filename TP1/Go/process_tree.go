@@ -9,54 +9,65 @@ import (
 	"time"
 )
 
+const (
+	NodeA string = "A"
+	NodeB        = "B"
+	NodeC        = "C"
+	NodeD        = "D"
+	NodeE        = "E"
+	NodeF        = "F"
+	NodeG        = "G"
+	NodeH        = "H"
+)
+
 func main() {
 	var wg sync.WaitGroup
 
 	if len(os.Args) > 1 {
 		switch os.Args[1] {
-		case "B":
-			println("Nodo B, pid:", os.Getpid(), "ppid:", os.Getppid())
+		case NodeB:
+			showNode(NodeB)
 			wg.Add(1)
-			go childProcess(&wg, "D")
+			go childProcess(&wg, NodeD)
 			wg.Add(1)
-			go childProcess(&wg, "E")
+			go childProcess(&wg, NodeE)
 			break
-		case "C":
-			println("Nodo C, pid:", os.Getpid(), "ppid:", os.Getppid())
+		case NodeC:
+			showNode(NodeC)
 			wg.Add(1)
-			go childProcess(&wg, "F")
+			go childProcess(&wg, NodeF)
 			break
-		case "D":
-			println("Nodo D, pid:", os.Getpid(), "ppid:", os.Getppid())
+		case NodeD:
+			showNode(NodeD)
 			time.Sleep(10 * time.Second)
 			break
-		case "E":
-			println("Nodo E, pid:", os.Getpid(), "ppid:", os.Getppid())
+		case NodeE:
+			showNode(NodeE)
 			wg.Add(1)
-			go childProcess(&wg, "G")
+			go childProcess(&wg, NodeG)
 			wg.Add(1)
-			go childProcess(&wg, "H")
+			go childProcess(&wg, NodeH)
 			break
-		case "F":
-			println("Nodo F, pid:", os.Getpid(), "ppid:", os.Getppid())
+		case NodeF:
+			showNode(NodeF)
 			time.Sleep(10 * time.Second)
 			break
-		case "G":
-			println("Nodo G, pid:", os.Getpid(), "ppid:", os.Getppid())
+		case NodeG:
+			showNode(NodeG)
 			time.Sleep(10 * time.Second)
 			break
-		case "H":
-			println("Nodo H, pid:", os.Getpid(), "ppid:", os.Getppid())
+		case NodeH:
+			showNode(NodeH)
 			time.Sleep(10 * time.Second)
 			break
 		}
 
 	} else {
-		println("Nodo A, pid:", os.Getpid(), "ppid:", os.Getppid())
+		showNode(NodeA)
 		wg.Add(1)
-		go childProcess(&wg, "B")
+		go childProcess(&wg, NodeB)
 		wg.Add(1)
-		go childProcess(&wg, "C")
+		go childProcess(&wg, NodeC)
 	}
 
 	wg.Wait()
@@ -78,4 +89,8 @@ func childProcess(wg *sync.WaitGroup, name string) {
 		fmt.Printf("Error waiting for child %s: %v\n", name, err)
 		return
 	}
+}
+
+func showNode(node string) {
+	println("Node", node, "pid:", os.Getpid(), "ppid:", os.Getppid())
 }
