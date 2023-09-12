@@ -5,7 +5,7 @@ def showProcess(process_name):
     print(f"Proceso {process_name} - PID: {os.getpid()} - PID padre: {os.getppid()}")
     
 pid_A = os.getpid()
-print(f"\nProceso A - PID: {pid_A}")
+showProcess("A")
 
 pid_B = os.fork()
 if pid_B == 0:
