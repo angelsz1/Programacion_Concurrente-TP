@@ -3,14 +3,17 @@ package TP1.Java;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ProcessTree {
-  public static void main(String[] args) throws IOException, InterruptedException {
+public class ProcessTree
+{
+  public static void main(String[] args) throws IOException, InterruptedException
+  {
     ArrayList<Process> processList = new ArrayList<>();
     String node = args.length > 0 ? args[0] : "A";
 
     showProcessInfo(node);
 
-    switch (node) {
+    switch (node)
+    {
       case "A":
         processList.add(createProcess("B"));
         processList.add(createProcess("C"));
@@ -37,7 +40,8 @@ public class ProcessTree {
     Thread.sleep(10000);
   }
 
-  public static Process createProcess(String node) throws IOException, InterruptedException {
+  public static Process createProcess(String node) throws IOException, InterruptedException
+  {
     ProcessBuilder pb = new ProcessBuilder("java", "ProcessTree.java", node);
     pb.inheritIO();
     Process p = pb.start();
@@ -45,15 +49,18 @@ public class ProcessTree {
     return p;
   }
 
-  public static void showProcessInfo(String node) {
+  public static void showProcessInfo(String node)
+  {
     long pid = ProcessHandle.current().pid();
     long ppid = ProcessHandle.current().parent().get().pid();
 
     System.out.print("Soy el nodo " + node + " PID: " + pid + " PPID: " + ppid + "\n");
   }
 
-  public static void waitChilds(ArrayList<Process> processList) throws InterruptedException {
-    for (Process process : processList) {
+  public static void waitChilds(ArrayList<Process> processList) throws InterruptedException
+  {
+    for (Process process : processList)
+    {
       process.waitFor();
     }
   }
