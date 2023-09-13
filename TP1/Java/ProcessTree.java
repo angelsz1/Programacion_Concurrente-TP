@@ -34,6 +34,7 @@ public class ProcessTree {
       default:
     }
     waitChilds(processList);
+    Thread.sleep(10000);
   }
 
   public static Process createProcess(String node) throws IOException, InterruptedException {
