@@ -1,6 +1,8 @@
+#include "process_three.h"
 #include <iostream>
 #include <sstream> // used for std::thread::id to const char*
 #include <thread>
+#include <cstring> // strcmp
 
 /*
 Trabajo Práctico N° 1- Parte1
@@ -14,38 +16,90 @@ Nota: Pausar o retrasar la finalización del programa para que el equipo docente
 correcta creación del árbol
 */
 
-// Level 0
-#define ROOT_NODE_NAME "A"
+int main(){
+    node_function(ROOT_NODE,"");
+    return EXIT_SUCCESS;
+}
 
-// Level 1
-#define LEFT_NODE_NAME "B"
-#define RIGHT_NODE_NAME "C"
+void node_function(Node node, const char * father_id){
+    std::thread::id thread_id = std::this_thread::get_id();
+    show_node_info(node, thread_id, father_id);
 
-// Level 2
-#define LEFT_LEFT_NODE_NAME "D"
-#define LEFT_RIGHT_NODE_NAME "E"
-#define RIGHT_RIGHT_NODE_NAME "F"
+    evaluate_to_create_nodes(node);
+}
 
-// Level 3
-#define LEFT_RIGHT_LEFT_NODE_NAME "G"
-#define LEFT_RIGHT_RIGHT_NODE_NAME "H"
+const char* get_node_name(Node node){
+    const char* name = "";
+    switch (node)
+    {
+    case ROOT_NODE: name = ROOT_NODE_NAME; break;
+    case LEFT_NODE: name = LEFT_NODE_NAME; break;
+    case RIGHT_NODE: name = RIGHT_NODE_NAME; break;
+    case LEFT_LEFT_NODE: name = LEFT_LEFT_NODE_NAME; break;
+    case LEFT_RIGHT_NODE: name = LEFT_RIGHT_NODE_NAME; break;
+    case RIGHT_RIGHT_NODE: name = RIGHT_RIGHT_NODE_NAME; break;
+    case LEFT_RIGHT_LEFT_NODE: name = LEFT_RIGHT_LEFT_NODE_NAME; break; 
+    case LEFT_RIGHT_RIGHT_NODE: name = LEFT_RIGHT_RIGHT_NODE_NAME; break;
+    default:
+        break;
+    }
+    return name;
+}
+
+void show_node_info(Node node, std::thread::id thread_id, const char * father_id){
+    const char* name = get_node_name(node);
+    const char* id = convert(thread_id);
+    std::cout<<"NODE "<<name<<" | pid="<<thread_id<<" ppid="<<father_id<<std::endl;
+}
+
+void evaluate_to_create_nodes(Node node){
+
+    bool has_left = false, has_right = false;
+    Node new_node_left;
+    Node new_node_right;
+
+    std::thread::id thread_id = std::this_thread::get_id();
+    const char* id = convert(thread_id);
+
+    switch (node)
+    {
+    case ROOT_NODE:
+        new_node_left = LEFT_NODE; has_left = true;
+        new_node_right = RIGHT_NODE; has_right = true;
+        break;
+
+    case LEFT_NODE:
+        new_node_left = LEFT_LEFT_NODE; has_left = true;
+        new_node_right = LEFT_RIGHT_NODE; has_right = true;
+        break;
+    
+    case RIGHT_NODE:
+        new_node_right = RIGHT_RIGHT_NODE; has_right = true;
+        break;
+        
+    case LEFT_RIGHT_NODE:
+        new_node_left = LEFT_RIGHT_LEFT_NODE; has_left = true;
+        new_node_right = LEFT_RIGHT_RIGHT_NODE; has_right = true;
+        break;
+
+    default:
+        break;
+    }
+    
+    if (has_left)
+    {
+        std::thread thread_node_left(node_function, new_node_left, id);
+        thread_node_left.join();
+    }
+    if (has_right)
+    {
+        std::thread thread_node_right(node_function, new_node_right, id);
+        thread_node_right.join();
+    }
+}
 
 const char * convert(std::thread::id id){
-    std::ostringstream oss;
-    oss << id << std::endl;
-    return oss.str().c_str();
-}
-
-void show_node_info(const char* name, const char * id, const char * fatherId){
-    std::cout<<"NODE "<<name<<" | pid="<<id<<" ppid="<<fatherId<<std::endl;
-}
-
-void node_function(const char* name, const char * fatherId){
-    std::thread::id id = std::this_thread::get_id();
-    show_node_info(name, convert(id), fatherId);
-}
-
-int main(){
-    node_function(ROOT_NODE_NAME,"");
-    return EXIT_SUCCESS;
+    std::stringstream ss;
+    ss << id;
+    return ss.str().c_str();
 }
