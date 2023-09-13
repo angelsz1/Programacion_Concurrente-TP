@@ -1,8 +1,7 @@
 #include "process_three.h"
 #include <iostream>
-#include <sstream> // used for std::thread::id to const char*
+#include <sstream> // used for ostringstream
 #include <thread>
-#include <cstring> // strcmp
 
 /*
 Trabajo Práctico N° 1- Parte1
@@ -17,15 +16,30 @@ correcta creación del árbol
 */
 
 int main(){
-    node_function(ROOT_NODE,"");
+    node_function(ROOT_NODE,nullptr);
     return EXIT_SUCCESS;
 }
 
-void node_function(Node node, const char * father_id){
+void node_function(Node node, std::thread::id* father_id){
     std::thread::id thread_id = std::this_thread::get_id();
     show_node_info(node, thread_id, father_id);
 
     evaluate_to_create_nodes(node);
+}
+
+void show_node_info(Node node, std::thread::id thread_id, std::thread::id * father_id){
+    const char* name = get_node_name(node);
+
+    std::ostringstream oss;
+    oss << "NODE " << name << " \tpid=" << thread_id << " \tppid=";
+    
+    if (father_id != nullptr) {
+        oss << *father_id;
+    } else {
+        oss << "-";
+    }
+
+    std::cout<<oss.str()<<std::endl;
 }
 
 const char* get_node_name(Node node){
@@ -46,20 +60,13 @@ const char* get_node_name(Node node){
     return name;
 }
 
-void show_node_info(Node node, std::thread::id thread_id, const char * father_id){
-    const char* name = get_node_name(node);
-    const char* id = convert(thread_id);
-    std::cout<<"NODE "<<name<<" | pid="<<thread_id<<" ppid="<<father_id<<std::endl;
-}
 
 void evaluate_to_create_nodes(Node node){
-
     bool has_left = false, has_right = false;
     Node new_node_left;
     Node new_node_right;
 
     std::thread::id thread_id = std::this_thread::get_id();
-    const char* id = convert(thread_id);
 
     switch (node)
     {
@@ -88,18 +95,12 @@ void evaluate_to_create_nodes(Node node){
     
     if (has_left)
     {
-        std::thread thread_node_left(node_function, new_node_left, id);
+        std::thread thread_node_left(node_function, new_node_left, &thread_id);
         thread_node_left.join();
     }
     if (has_right)
     {
-        std::thread thread_node_right(node_function, new_node_right, id);
+        std::thread thread_node_right(node_function, new_node_right, &thread_id);
         thread_node_right.join();
     }
-}
-
-const char * convert(std::thread::id id){
-    std::stringstream ss;
-    ss << id;
-    return ss.str().c_str();
 }

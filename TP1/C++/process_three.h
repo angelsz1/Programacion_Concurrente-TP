@@ -35,12 +35,9 @@ LEFT_RIGHT_RIGHT_NODE,
 
 
 // Functions
-void node_function(Node node, const char * father_id);
-void show_node_info(Node node,std::thread::id thread_id,  const char * father_id);
+void node_function(Node node, std::thread::id* father_id);
+void show_node_info(Node node,std::thread::id thread_id,  std::thread::id* father_id);
 void evaluate_to_create_nodes(Node node);
-// Util Functions
-const char * convert(std::thread::id id);
-
 const char* get_node_name(Node node);
 
 #endif
