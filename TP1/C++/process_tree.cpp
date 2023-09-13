@@ -2,32 +2,26 @@
 #include <iostream>
 #include <sstream> // used for ostringstream
 #include <thread>
+#include <unistd.h> //fork
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/wait.h>
 
-/*
-Trabajo Práctico N° 1- Parte1
-Procesos Pesados
-
-Todos los procesos incluido el principal (A), informarán por pantalla su letra correspondiente al 
-gráfico, su identificador de proceso (PID) y el PID de su padre. En cuanto a la creación, todos los 
-procesos hijos deberán crearse con el enfoque de programación concurrente, es decir NO sería una 
-solución válida crear un proceso y esperar a que éste finalice para crear el siguiente.
-Nota: Pausar o retrasar la finalización del programa para que el equipo docente pueda verificar la
-correcta creación del árbol
-*/
+Node currentNode = ROOT_NODE;
 
 int main(){
     node_function(ROOT_NODE,nullptr);
     return EXIT_SUCCESS;
 }
 
-void node_function(Node node, std::thread::id* father_id){
-    std::thread::id thread_id = std::this_thread::get_id();
-    show_node_info(node, thread_id, father_id);
+void node_function(Node node, pid_t * father_id){
+    pid_t process_id = get_pid();
+    show_node_info(node, process_id, father_id);
 
     evaluate_to_create_nodes(node);
 }
 
-void show_node_info(Node node, std::thread::id thread_id, std::thread::id * father_id){
+void show_node_info(Node node, pid_t thread_id, pid_t * father_id){
     const char* name = get_node_name(node);
 
     std::ostringstream oss;
@@ -60,17 +54,11 @@ const char* get_node_name(Node node){
     return name;
 }
 
-
-void evaluate_to_create_nodes(Node node){
+void evaluate_to_create_nodes(){
     bool has_left = false, has_right = false;
 
     Node new_node_left;
     Node new_node_right;
-
-    std::thread thread_node_left;
-    std::thread thread_node_right;
-
-    std::thread::id thread_id = std::this_thread::get_id();
 
     switch (node)
     {
@@ -96,22 +84,36 @@ void evaluate_to_create_nodes(Node node){
     default:
         break;
     }
+
+    pid_t id = get_pid();
     
     if (has_left)
     {
-        thread_node_left = std::thread(node_function, new_node_left, &thread_id);
-    }
+        pid_t pid_left = fork();
+        if (pid <= 0)
+        {
+            std::cerr << "No se pudo crear el proceso.\n";
+            exit(EXIT_FAILURE);
+        }
+        node_function(new_node_left, &id);
+    };
     if (has_right)
     {
-        thread_node_right = std::thread(node_function, new_node_right, &thread_id);
+        pid_t pid_right = fork();
+        if (pid <= 0)
+        {
+            std::cerr << "No se pudo crear el proceso.\n";
+            exit(EXIT_FAILURE);
+        }
+        node_function(new_node_right, &id);
     }
-
+    
     if (has_left)
     {
-        thread_node_left.join();
+        wait(NULL);
     }
     if (has_right)
     {
-        thread_node_right.join();
+        wait(NULL);
     }
 }
