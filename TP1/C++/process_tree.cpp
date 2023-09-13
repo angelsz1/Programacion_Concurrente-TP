@@ -31,7 +31,7 @@ void show_node_info(Node node, std::thread::id thread_id, std::thread::id * fath
     const char* name = get_node_name(node);
 
     std::ostringstream oss;
-    oss << "NODE " << name << " \tpid=" << thread_id << " \tppid=";
+    oss << "\nNODE " << name << " \tpid=" << thread_id << " \tppid=";
     
     if (father_id != nullptr) {
         oss << *father_id;
@@ -39,7 +39,7 @@ void show_node_info(Node node, std::thread::id thread_id, std::thread::id * fath
         oss << "-";
     }
 
-    std::cout<<oss.str()<<std::endl;
+    std::cout<<oss.str();
 }
 
 const char* get_node_name(Node node){
@@ -63,8 +63,12 @@ const char* get_node_name(Node node){
 
 void evaluate_to_create_nodes(Node node){
     bool has_left = false, has_right = false;
+
     Node new_node_left;
     Node new_node_right;
+
+    std::thread thread_node_left;
+    std::thread thread_node_right;
 
     std::thread::id thread_id = std::this_thread::get_id();
 
@@ -95,12 +99,19 @@ void evaluate_to_create_nodes(Node node){
     
     if (has_left)
     {
-        std::thread thread_node_left(node_function, new_node_left, &thread_id);
+        thread_node_left = std::thread(node_function, new_node_left, &thread_id);
+    }
+    if (has_right)
+    {
+        thread_node_right = std::thread(node_function, new_node_right, &thread_id);
+    }
+
+    if (has_left)
+    {
         thread_node_left.join();
     }
     if (has_right)
     {
-        std::thread thread_node_right(node_function, new_node_right, &thread_id);
         thread_node_right.join();
     }
 }
