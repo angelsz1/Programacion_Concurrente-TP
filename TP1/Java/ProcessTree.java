@@ -33,13 +33,11 @@ public class ProcessTree {
         break;
       default:
     }
-    for (Process process : processList) {
-      process.waitFor();
-    }
+    waitChilds(processList);
   }
 
   public static Process createProcess(String node) throws IOException, InterruptedException {
-    ProcessBuilder pb = new ProcessBuilder("java", "Process_tree.java", node);
+    ProcessBuilder pb = new ProcessBuilder("java", "ProcessTree.java", node);
     pb.inheritIO();
     Process p = pb.start();
 
@@ -51,5 +49,11 @@ public class ProcessTree {
     long ppid = ProcessHandle.current().parent().get().pid();
 
     System.out.print("Soy el nodo " + node + " PID: " + pid + " PPID: " + ppid + "\n");
+  }
+
+  public static void waitChilds(ArrayList<Process> processList) throws InterruptedException {
+    for (Process process : processList) {
+      process.waitFor();
+    }
   }
 }
