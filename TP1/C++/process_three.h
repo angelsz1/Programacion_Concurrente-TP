@@ -1,6 +1,5 @@
 #ifndef FILENAME_H
 #define FILENAME_H
-#include <thread>
 
 enum Node {
 // Level 0

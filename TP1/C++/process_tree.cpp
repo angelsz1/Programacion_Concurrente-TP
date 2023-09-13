@@ -1,7 +1,6 @@
 #include "process_three.h"
 #include <iostream>
 #include <sstream> // used for ostringstream
-#include <thread>
 #include <unistd.h> //fork
 #include <stdlib.h>
 #include <stdio.h>
@@ -15,7 +14,7 @@ int main(){
 }
 
 void node_function(Node node, pid_t * father_id){
-    pid_t process_id = get_pid();
+    pid_t process_id = getpid();
     show_node_info(node, process_id, father_id);
 
     evaluate_to_create_nodes(node);
@@ -85,7 +84,7 @@ void evaluate_to_create_nodes(){
         break;
     }
 
-    pid_t id = get_pid();
+    pid_t id = getpid();
     
     if (has_left)
     {
