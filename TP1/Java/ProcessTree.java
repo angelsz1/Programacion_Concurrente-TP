@@ -7,37 +7,45 @@ public class ProcessTree
 {
   public static void main(String[] args) throws IOException, InterruptedException
   {
-    ArrayList<Process> processList = new ArrayList<>();
-    String node = args.length > 0 ? args[0] : "A";
-
-    showProcessInfo(node);
-
-    switch (node)
+    try
     {
-      case "A":
-        processList.add(createProcess("B"));
-        processList.add(createProcess("C"));
-        break;
-      case "B":
-        processList.add(createProcess("D"));
-        processList.add(createProcess("E"));
-        break;
-      case "C":
-        processList.add(createProcess("F"));
-        break;
-      case "E":
-        processList.add(createProcess("G"));
-        processList.add(createProcess("H"));
-        break;
-      case "D":
-      case "F":
-      case "G":
-      case "H":
-        break;
-      default:
+      ArrayList<Process> processList = new ArrayList<>();
+      String node = args.length > 0 ? args[0] : "A";
+
+      showProcessInfo(node);
+
+      switch (node)
+      {
+        case "A":
+          processList.add(createProcess("B"));
+          processList.add(createProcess("C"));
+          break;
+        case "B":
+          processList.add(createProcess("D"));
+          processList.add(createProcess("E"));
+          break;
+        case "C":
+          processList.add(createProcess("F"));
+          break;
+        case "E":
+          processList.add(createProcess("G"));
+          processList.add(createProcess("H"));
+          break;
+        case "D":
+        case "F":
+        case "G":
+        case "H":
+          break;
+        default:
+          System.out.println("Nodo desconocido");
+      }
+
+      waitChilds(processList);
+      Thread.sleep(10000);
+    } catch (IOException | InterruptedException e)
+    {
+      e.printStackTrace();
     }
-    waitChilds(processList);
-    Thread.sleep(10000);
   }
 
   public static Process createProcess(String node) throws IOException, InterruptedException
