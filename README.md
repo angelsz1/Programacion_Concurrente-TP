@@ -1,7 +1,7 @@
 # Programacion_Concurrente-TP
 La estructura de directorios debe ser
 
-     TP1   -- C
+     TP1   -- C++
           |
            -- Java
           |
