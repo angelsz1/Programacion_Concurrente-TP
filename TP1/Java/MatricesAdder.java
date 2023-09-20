@@ -41,6 +41,10 @@ public class MatricesAdder {
 
     CS = addMatricesSequentially(matrixA, matrixB);
     addMatricesConcurrently(matrixA, matrixB);
+    printMatrix(matrixA, "Matriz A");
+    printMatrix(matrixB, "Matriz B");
+    printMatrix(CS, "Matriz C (Secuencial)");
+    printMatrix(CC, "Matriz C (Concurrente)");
     printResultComparation(CS, CC);
   }
 
