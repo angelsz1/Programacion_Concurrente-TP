@@ -1,7 +1,5 @@
 package main;
 
-// generate two 5x5 matrices with random values
-
 import (
     "fmt"
     "math/rand"
