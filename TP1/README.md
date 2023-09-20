@@ -12,7 +12,7 @@ Todos los procesos incluido el principal (A), informarán por pantalla su letra 
 ## Procesos Livianos (Threads) - Parte 2
 
 ### Colab
-* C++ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/googlecolab/colabtools/blob/master/notebooks/colab-github-demo.ipynb)
+* C++ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/angelsz1/Programacion_Concurrente-TP/blob/master/TP1/C%2B%2B/TP1_Parte_2_Threads_C%2B%2B.ipynb)
 * Go [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1p2qNkjIqmb_rGLyGpCuaGUyjUX0cGpDY#scrollTo=tBXVf2_GIMp4)
 * Java [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1UADb2HlDZCnUykYoBL_XsrUDkdVhS9Da?usp=sharing)
 * Python [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Xn4TeNK25EPX1Z545fL1Hoy98Gwxehkh?authuser=0#scrollTo=fVJGE6OX5dZ4)
