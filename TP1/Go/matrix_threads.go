@@ -14,8 +14,8 @@ const (
 func main() {
     var matrix1 [N][N]int
     var matrix2 [N][N]int
-    var result [N][N]int
-    var result2 [N][N]int
+    var resultCS [N][N]int
+    var resultCC [N][N]int
 
     matrix1 = generateMatrix()
     matrix2 = generateMatrix()
@@ -26,27 +26,27 @@ func main() {
     printMatrix(matrix2)
 
     t0 := time.Now()
-    result = secuentialSum(matrix1, matrix2)
+    resultCS = secuentialSum(matrix1, matrix2)
     t1 := time.Now()
-    result2 = concurrentSum(matrix1, matrix2)
+    resultCC = concurrentSum(matrix1, matrix2)
     t2 := time.Now()
     fmt.Printf("Secuential sum took %v to run.\n", t1.Sub(t0))
     fmt.Printf("Concurrent sum took %v to run.\n", t2.Sub(t1))
 
-    fmt.Println("Result:")
-    printMatrix(result)
+    fmt.Println("ResultCS:")
+    printMatrix(resultCS)
 
-    fmt.Println("Result2:")
-    printMatrix(result2)
+    fmt.Println("ResultCC:")
+    printMatrix(resultCC)
 
-    showThatBothResultsAreEqual(result, result2)
+    showThatBothResultsAreEqual(resultCS, resultCC)
     
 }
 
-func showThatBothResultsAreEqual(result [N][N]int, result2 [N][N]int) {
+func showThatBothResultsAreEqual(resultCS [N][N]int, resultCC [N][N]int) {
     for i := 0; i < N; i++ {
         for j := 0; j < N; j++ {
-            if result[i][j] != result2[i][j] {
+            if resultCS[i][j] != resultCC[i][j] {
                 fmt.Println("Results are not equal")
                 return
             }
