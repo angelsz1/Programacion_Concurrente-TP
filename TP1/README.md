@@ -46,7 +46,7 @@ generadas, así como la matriz resultado CC
 
 ### Colab
 * C++ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com)
-* Python [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com)
+* Python [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/angelsz1/Programacion_Concurrente-TP/blob/master/TP1/Python/pipe_words_report.ipynb)
 * Java [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]( https://colab.research.google.com/drive/16ynjmk11PcdUsnZ6CfLU2gs5rk3_-k41)
 
 ### Enunciado
