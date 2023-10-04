@@ -1,19 +1,20 @@
 #ifndef FILENAME_H
 #define FILENAME_H
 
-enum Node {
-// Level 0
-ROOT_NODE,
-// Level 1
-LEFT_NODE,
-RIGHT_NODE,
-// Level 2
-LEFT_LEFT_NODE,
-LEFT_RIGHT_NODE,
-RIGHT_RIGHT_NODE,
-// Level 3
-LEFT_RIGHT_LEFT_NODE,
-LEFT_RIGHT_RIGHT_NODE,
+enum Node 
+{
+  // Level 0
+  ROOT_NODE,
+  // Level 1
+  LEFT_NODE,
+  RIGHT_NODE,
+  // Level 2
+  LEFT_LEFT_NODE,
+  LEFT_RIGHT_NODE,
+  RIGHT_RIGHT_NODE,
+  // Level 3
+  LEFT_RIGHT_LEFT_NODE,
+  LEFT_RIGHT_RIGHT_NODE,
 };
 
 // Level 0
@@ -32,10 +33,9 @@ LEFT_RIGHT_RIGHT_NODE,
 #define LEFT_RIGHT_LEFT_NODE_NAME "G"
 #define LEFT_RIGHT_RIGHT_NODE_NAME "H"
 
-
 // Functions
-void node_function(Node node, pid_t * father_id);
-void show_node_info(Node node,pid_t thread_id,  pid_t * father_id);
+void node_function(Node node);
+void show_node_info(Node node);
 void evaluate_to_create_nodes(Node node);
 const char* get_node_name(Node node);
 

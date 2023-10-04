@@ -41,3 +41,48 @@ b. Suma concurrente
 correspondiente de la matriz B, generando la fila resultado en la matriz CC.
 * Al finalizar todos los hilos, el main deberá informar por pantalla las matrices A y B 
 generadas, así como la matriz resultado CC
+
+## Comunicación y Sincronismo - Parte 3
+
+### Colab
+* C++ y Rust [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1y9JFhErVRk5EP5Z_YxMpofQwEYJGZ_qE?usp=sharing)
+* Python [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/angelsz1/Programacion_Concurrente-TP/blob/master/TP1/Python/pipe_words_report.ipynb)
+* Java [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]( https://colab.research.google.com/drive/16ynjmk11PcdUsnZ6CfLU2gs5rk3_-k41)
+
+### Enunciado
+1. **C++ y Rust**
+
+   Crear un programa que reciba por parámetro una cadena de caracteres y convierta cada carácter en un número, generando una contraseña. La idea es que cada letra se corresponda con un número de la siguiente manera; A -> 1, B-> 2, etc. Se consideraran solo letras mayúsculas, en caso de recibir minúsculas, convertirlas. Por ejemplo, para la palabra; ARBOLITO el programa generará la siguiente lista de valores: [1, 18, 2, 15, 12, 9, 20, 15]
+
+   El programa principal, generará dos hilos que realizarán la conversión de cada carácter, una vez finalizada la misma, mostrará por pantalla la contraseña generada. Como parámetro, los hilos recibirán la cantidad de caracteres que deben procesar, es decir que pueden procesar cualquier carácter de la cadena que no haya sido convertida todavía, solo están limitados en la cantidad de caracteres, en cuanto a esto último; la idea es que se reparta de la manera mas equitativa posible, para el ejemplo anterior cada hilo procesará cuatro posiciones, de quedar impar, uno de los hilos procesará un carácter mas que el otro.
+
+   Utilizar algún mecanismo de sincronización entre los hilos para garantizar el correcto funcionamiento del programa.
+   
+3. **Python**
+
+   Comunicar dos procesos emparentados (Padre – Hijo) a través de una tubería (Pipe).
+   
+   El programa principal (Padre) deberá proveer una suerte de prompt donde el usuario podrá ingresar palabras (close para finalizar la ejecución). Cada palabra será enviada al hijo. Al finalizar la ejecución el hijo deberá retornar cierta información estadística al padre, quien la imprimirá en pantalla, luego de estos ambos procesos finalizarán.
+   
+   Sobre la información estadística:
+    * Cantidad de caracteres totales
+    * Cantidad de letras
+    * Cantidad de dígitos
+    * La palabra de mayor longitud
+    * La palabra de menor longitud
+
+5. **Java**
+   
+   Crear un programa que genere dos hilos, un productor y un consumidor, el productor producirá valores enteros (0 a 99) y se los enviará al consumidor. El productor deberá comunicar por pantalla cada valor producido. El consumidor generará cierta información estadística que mostrará por pantalla al finalizar la recepción de N valores (el valor N debe ser pasado como parámetro al programa). Luego de esto el programa finalizará la ejecución del programa.
+
+   Sobre la información estadística:
+    * El promedio (float)
+    * El mínimo
+    * El máximo
+    * La suma
+    * El/los valor/es mas frecuente/s
+
+   Sobre el mecanismo de comunicación:
+    * Utilizar la clase ArrayBlockingQueue
+
+Si el grupo necesitará o quisiera agregar algún método de sincronización es libre de hacerlo

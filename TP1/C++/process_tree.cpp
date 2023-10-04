@@ -6,113 +6,111 @@
 #include <stdio.h>
 #include <sys/wait.h>
 
-Node currentNode = ROOT_NODE;
-
-int main(){
-    node_function(ROOT_NODE,nullptr);
-    return EXIT_SUCCESS;
+int main()
+{
+  node_function(ROOT_NODE);
+  return EXIT_SUCCESS;
 }
 
-void node_function(Node node, pid_t * father_id){
-    pid_t process_id = getpid();
-    show_node_info(node, process_id, father_id);
-
-    evaluate_to_create_nodes(node);
+void node_function(Node node)
+{
+  show_node_info(node);
+  evaluate_to_create_nodes(node);
 }
 
-void show_node_info(Node node, pid_t thread_id, pid_t * father_id){
-    const char* name = get_node_name(node);
-
-    std::ostringstream oss;
-    oss << "\nNODE " << name << " \tpid=" << thread_id << " \tppid=";
-    
-    if (father_id != nullptr) {
-        oss << *father_id;
-    } else {
-        oss << "-";
-    }
-
-    std::cout<<oss.str();
+void show_node_info(Node node)
+{
+  const char* name = get_node_name(node);
+  std::ostringstream oss;
+  oss << "\nNODE " << name << " \tpid=" << getpid() << " \tppid=" << getppid() << "\n";
+  std::cout<<oss.str();
 }
 
-const char* get_node_name(Node node){
-    const char* name = "";
-    switch (node)
-    {
+const char* get_node_name(Node node)
+{
+  const char* name = "";
+  switch (node)
+  {
     case ROOT_NODE: name = ROOT_NODE_NAME; break;
     case LEFT_NODE: name = LEFT_NODE_NAME; break;
     case RIGHT_NODE: name = RIGHT_NODE_NAME; break;
     case LEFT_LEFT_NODE: name = LEFT_LEFT_NODE_NAME; break;
     case LEFT_RIGHT_NODE: name = LEFT_RIGHT_NODE_NAME; break;
     case RIGHT_RIGHT_NODE: name = RIGHT_RIGHT_NODE_NAME; break;
-    case LEFT_RIGHT_LEFT_NODE: name = LEFT_RIGHT_LEFT_NODE_NAME; break; 
+    case LEFT_RIGHT_LEFT_NODE: name = LEFT_RIGHT_LEFT_NODE_NAME; break;
     case LEFT_RIGHT_RIGHT_NODE: name = LEFT_RIGHT_RIGHT_NODE_NAME; break;
-    default:
-        break;
-    }
-    return name;
+    default: break;
+  }
+  return name;
 }
 
-void evaluate_to_create_nodes(){
-    bool has_left = false, has_right = false;
+void evaluate_to_create_nodes(Node node)
+{
+  bool has_left = false, has_right = false;
+  Node new_node_left;
+  Node new_node_right;
 
-    Node new_node_left;
-    Node new_node_right;
-
-    switch (node)
-    {
+  switch (node)
+  {
     case ROOT_NODE:
-        new_node_left = LEFT_NODE; has_left = true;
-        new_node_right = RIGHT_NODE; has_right = true;
-        break;
+      new_node_left = LEFT_NODE; has_left = true;
+      new_node_right = RIGHT_NODE; has_right = true;
+      break;
 
     case LEFT_NODE:
-        new_node_left = LEFT_LEFT_NODE; has_left = true;
-        new_node_right = LEFT_RIGHT_NODE; has_right = true;
-        break;
-    
+      new_node_left = LEFT_LEFT_NODE; has_left = true;
+      new_node_right = LEFT_RIGHT_NODE; has_right = true;
+      break;
+
     case RIGHT_NODE:
-        new_node_right = RIGHT_RIGHT_NODE; has_right = true;
-        break;
-        
+      new_node_right = RIGHT_RIGHT_NODE; has_right = true;
+      break;
+
     case LEFT_RIGHT_NODE:
-        new_node_left = LEFT_RIGHT_LEFT_NODE; has_left = true;
-        new_node_right = LEFT_RIGHT_RIGHT_NODE; has_right = true;
-        break;
+      new_node_left = LEFT_RIGHT_LEFT_NODE; has_left = true;
+      new_node_right = LEFT_RIGHT_RIGHT_NODE; has_right = true;
+      break;
 
     default:
-        break;
-    }
+      break;
+  }
 
-    pid_t id = getpid();
-    
-    if (has_left)
+  if (has_left)
+  {
+    pid_t pid_left = fork();
+    if (pid_left < 0)
     {
-        pid_t pid_left = fork();
-        if (pid <= 0)
-        {
-            std::cerr << "No se pudo crear el proceso.\n";
-            exit(EXIT_FAILURE);
-        }
-        node_function(new_node_left, &id);
-    };
-    if (has_right)
-    {
-        pid_t pid_right = fork();
-        if (pid <= 0)
-        {
-            std::cerr << "No se pudo crear el proceso.\n";
-            exit(EXIT_FAILURE);
-        }
-        node_function(new_node_right, &id);
+      std::cerr << "No se pudo crear el proceso.\n";
+      exit(EXIT_FAILURE);
     }
-    
-    if (has_left)
+    else if (pid_left == 0)
     {
-        wait(NULL);
+      node_function(new_node_left); // soy proceso hijo
+      exit(EXIT_SUCCESS);
     }
-    if (has_right)
+  }
+
+  if (has_right)
+  {
+    pid_t pid_right = fork();
+    if (pid_right < 0)
     {
-        wait(NULL);
+      std::cerr << "No se pudo crear el proceso.\n";
+      exit(EXIT_FAILURE);
     }
+  else if (pid_right == 0)
+    {
+      node_function(new_node_right); // soy proceso hijo
+      exit(EXIT_SUCCESS);
+    }            
+  }
+
+  if (has_left)
+  {
+    wait(NULL);
+  }
+  if (has_right)
+  {
+    wait(NULL);
+  }
 }
