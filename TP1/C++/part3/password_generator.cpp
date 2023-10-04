@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
     int len = password.length();
 
     std::thread thread_1 = std::thread(characterConverter, len/2);
-    std::thread thread_2 = std::thread(characterConverter, len/2);
+    std::thread thread_2 = std::thread(characterConverter, len/2 + len%2);
 
     thread_2.join();
     thread_1.join();
