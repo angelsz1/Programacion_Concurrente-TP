@@ -45,12 +45,12 @@ generadas, así como la matriz resultado CC
 ## Comunicación y Sincronismo - Parte 3
 
 ### Colab
-* C++ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com)
+* C++ y Rust [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1y9JFhErVRk5EP5Z_YxMpofQwEYJGZ_qE?usp=sharing)
 * Python [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/angelsz1/Programacion_Concurrente-TP/blob/master/TP1/Python/pipe_words_report.ipynb)
 * Java [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]( https://colab.research.google.com/drive/16ynjmk11PcdUsnZ6CfLU2gs5rk3_-k41)
 
 ### Enunciado
-1. **C++**
+1. **C++ y Rust**
 
    Crear un programa que reciba por parámetro una cadena de caracteres y convierta cada carácter en un número, generando una contraseña. La idea es que cada letra se corresponda con un número de la siguiente manera; A -> 1, B-> 2, etc. Se consideraran solo letras mayúsculas, en caso de recibir minúsculas, convertirlas. Por ejemplo, para la palabra; ARBOLITO el programa generará la siguiente lista de valores: [1, 18, 2, 15, 12, 9, 20, 15]
 
