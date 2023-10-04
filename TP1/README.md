@@ -45,7 +45,7 @@ generadas, así como la matriz resultado CC
 ## Comunicación y Sincronismo - Parte 3
 
 ### Colab
-* C++ y Rust [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]([https://colab.research.google.com](https://colab.research.google.com/drive/1y9JFhErVRk5EP5Z_YxMpofQwEYJGZ_qE?usp=sharing))
+* C++ y Rust [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1y9JFhErVRk5EP5Z_YxMpofQwEYJGZ_qE?usp=sharing)
 * Python [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com)
 * Java [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]( https://colab.research.google.com/drive/16ynjmk11PcdUsnZ6CfLU2gs5rk3_-k41)
 
