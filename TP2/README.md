@@ -8,4 +8,5 @@
 ### Enunciado
 * Hola Mundo con MPI
 * Ejercicio Contar palabras
+
 Enunciado [aquí](https://github.com/Progc-unlam/material-progc/blob/main/Ejemplos/OpenMP-MPI/Enunciados-TP/2%C2%B0_Cuat_2023/TP_2_Parte2_MPI.ipynb)
