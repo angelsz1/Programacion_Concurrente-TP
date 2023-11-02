@@ -1,5 +1,11 @@
 # Trabajo Práctico N° 2
 
+## OpenMP - Parte 1
+
+### Colab 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1KdYZxgyyiZT9MXX5QOaSlkYZWGT6D_Fy#scrollTo=WdqmJHQ4vcdF)
+
+
 ## MPI - Parte 2
 
 ### Colab 
